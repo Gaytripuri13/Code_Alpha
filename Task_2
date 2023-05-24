@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    <form>
+        <input type="text" id="originalUrl" placeholder="Enter the URL" required>
+        <button type="button" onclick="shortenUrl()">Shorten</button>
+    </form>
+    <div id="shortenedUrl"></div>
+
+    <script>
+        function shortenUrl() {
+            var originalUrl = document.getElementById("originalUrl").value;
+            var request = new XMLHttpRequest();
+            var apiUrl = "https://api.example.com/shorten"; // Replace with your backend API URL
+
+            request.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    var response = JSON.parse(this.responseText);
+                    document.getElementById("shortenedUrl").innerHTML = "Shortened URL: " + response.shortUrl;
+                }
+            };
+
+            request.open("POST", apiUrl, true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify({ originalUrl: originalUrl }));
+        }
+    </script>
+</body>
+</html>
